@@ -8,6 +8,9 @@ The script is simple and uses [Splinter](https://splinter.readthedocs.io/en/late
 
 Basically UmbrellaTestPolicy.py loops through all the URLs in a CSV file, opens an automated chrome web driver session, and then looks for text on the page for both "Pass" and "Fail" for each individual test - "PassedText" indicates that the text in the column with the same name was found.
 
+<img src="example.gif" align="left" height="250" width="450" >
+
+
 ## Installation
 Script was tested/written on Python 3.7 but should work on 3.5+.  It requires the following external Python modules:
 * splinter (and related dependencies)
