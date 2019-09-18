@@ -10,6 +10,10 @@ Basically UmbrellaTestPolicy.py loops through all the URLs in a CSV file, opens 
 
 ## <img src="example.gif" align="center" height="250" width="450" >
 
+<p align="center">
+  <img src="example.gif" align="center" height="250" width="450" >
+</p>
+
 
 ## Installation
 Script was tested/written on Python 3.7 but should work on 3.5+.  It requires the following external Python modules:
