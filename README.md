@@ -2,16 +2,15 @@
 Python 3.5+ script to quickly test if various Cisco Umbrella settings/policies are enabled.
 
 ## Background/About
-To support a PoC, I needed a way to quickly test all of the test pages that Cisco Umbrella uses to test various policy configurations (see this URL).  Basically, as policy was changed/added/removed, I needed a way to test if a virtual endpoint was getting to Umbrella test pages (policy pass or fail).  
+To support a PoC, I needed a way to quickly test all of the test pages that Cisco Umbrella uses to test various policy configurations ([see this URL for a full list](https://support.umbrella.com/hc/en-us/articles/115000411528-What-are-the-Umbrella-Test-Destinations-)).  Basically, as policy was changed/added/removed, I needed a way to test if a virtual endpoint was getting to Umbrella test pages (policy pass or fail).  
 
-The script is pretty simple and uses [Splinter](https://splinter.readthedocs.io/en/latest/) and chromium as I had similar code from another project.  I may re-write using pyppeteer and/or requests to remove the browser dependency.  Basically it loops through all the URLs in a CSV file and then looks for text on the page - "PassedText" indicates that the text in the column with the same name was found.
+The script is simple and uses [Splinter](https://splinter.readthedocs.io/en/latest/) and the chrome web driver as I had similar code from another project.  (I may re-write using pyppeteer and/or requests to remove the browser dependency)  
 
+Basically UmbrellaTestPolicy.py loops through all the URLs in a CSV file, opens an automated chrome web driver session, and then looks for text on the page for both "Pass" and "Fail" for each individual test - "PassedText" indicates that the text in the column with the same name was found.
 
 ## Installation
-PortToggler was tested/written on Python 3.7 but should work on 3.5+.  It requires the following external Python modules:
-* requests
-* click
-* click_config_file
+Script was tested/written on Python 3.7 but should work on 3.5+.  It requires the following external Python modules:
+* splinter (and related dependencies)
 
 Preferred method of installation is in a Python virtual environment.
 
@@ -51,31 +50,51 @@ Scripts\activate.bat
 ```
 If completed successfully, your command prompt should now have changed (begins with the virtual environment name in parentheses)
 
+i.e.
+```
+(UmbrellaPolicyTest) $
+```
+
 To exit the virtual environment at any time, use the deactivate command
 ```
 deactivate
 ```
 
-## Install Chromium
+## Install Dependencies
 
+```
+pip install splinter
+```
+
+OR 
+
+```
+pip install -r requirements.txt 
+
+```
+
+## Install Chromium
+You will need the Chrome webdriver as per the instructions here (per OS instructions):
+https://splinter.readthedocs.io/en/latest/drivers/chrome.html
 
 ## Usage
-Invoke PortToggler.py --help to get started.  You need an API key, the switch's serial number, and the switch port.
+1) Change any of the script variables as you see fit:
+```
+# time in seconds to sleep between page visits
+sleeptime = 5   
+# ToDo csv file as CLI argument with default of umbrella_urls.csv
+csv_filename = 'umbrella_urls.csv'
+# debug mode? True/False
+debug = False
+# headless browser?  True/False
+headless = False
+```
+2) adjust the "umbrella_urls.csv" file if you don't want to run all tests.  You can also change the text to search for invidually for each test (pass/fail).  This may be necessary if you have customized the block pages in your Umbrella policy (non-default block pages).
 
-Primary options: --action=disable|enable|status
-
-Examples:
-
-    python PortToggler.py --api-key 123456789 --serialnumber A1B2C3D4 --switchport 5 --action=disable
-    
-    python PortToggler.py -A 123456789 -SN A1B2C3D4 -SP 5 --action=disable
-    
-    python PortToggler.py --config /path/to/file/api.cfg --serialnumber A1B2C3D4 --switchport 5 --action=disable
-
-    python PortToggler.py --config api.cfg --serialnumber A1B2C3D4 --switchport 5 --action=disable
-
-    If used, the api config file should contain one line similar to the following (single quotes required) e.g.
-    api_key = '123456789'
+3) While the virtual environment is active, simply run
+```
+python UmbrellaPolicyTest.py
+```
 
 This project is licensed to you under the terms of the [Cisco Sample
 Code License](./LICENSE).
