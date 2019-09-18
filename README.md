@@ -8,8 +8,6 @@ The script is simple and uses [Splinter](https://splinter.readthedocs.io/en/late
 
 Basically UmbrellaTestPolicy.py loops through all the URLs in a CSV file, opens an automated chrome web driver session, and then looks for text on the page for both "Pass" and "Fail" for each individual test - "PassedText" indicates that the text in the column with the same name was found.
 
-## <img src="example.gif" align="center" height="250" width="450" >
-
 <p align="center">
   <img src="example.gif" align="center" height="250" width="450" >
 </p>
